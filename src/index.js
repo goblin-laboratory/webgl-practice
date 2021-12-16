@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import App from "./App";
+import App from "./containers/App";
+import MDNGettingStarted from "./containers/MDNGettingStarted";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
@@ -9,6 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route path="/mdn-getting-started" element={<MDNGettingStarted />} />
         <Route path="*" element={<App />} />
         {/* <Route path="*" element={<App />} /> */}
       </Routes>
