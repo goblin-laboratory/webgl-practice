@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal } from "antd";
+import { Link } from "react-router-dom";
 // import './App.css';
 
 function MDNGettingStarted() {
@@ -23,9 +24,20 @@ function MDNGettingStarted() {
 
   return (
     <div>
+      <h1>
+        <a
+          target="_blank" rel="noreferrer"
+          href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL"
+        >
+          MDN Getting started with WebGL
+        </a>
+      </h1>
       <canvas ref={ref} id="glcanvas" width="640" height="480">
         你的浏览器似乎不支持或者禁用了HTML5 <code>&lt;canvas&gt;</code> 元素.
       </canvas>
+      <div>
+        <Link to="/mdn-adding-2D-content">下一步：使用 WebGL 创建 2D 内容</Link>
+      </div>
     </div>
   );
 }
