@@ -6,6 +6,9 @@ import MDNGettingStarted from "./containers/MDNGettingStarted";
 import MDNAdding2DContent from "./containers/MDNAdding2DContent";
 import MDNAnimating from "./containers/MDNAnimating";
 import RenderVideo from "./containers/RenderVideo";
+import DrawPoint from "./containers/DrawPoint";
+// import TwglGettingStarted from "./containers/TwglGettingStarted";
+// import ThreejsGettingStarted from "./containers/ThreejsGettingStarted";
 
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
@@ -14,7 +17,10 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<RenderVideo />} />
+        <Route path="/" element={<DrawPoint />} />
+        <Route path="/draw-point" element={<DrawPoint />} />
+        {/* <Route path="/threejs-getting-started" element={<ThreejsGettingStarted />} /> */}
+        {/* <Route path="/twgl-getting-started" element={<TwglGettingStarted />} /> */}
         <Route path="/render-video" element={<RenderVideo />} />
         <Route path="/mdn-animating" element={<MDNAnimating />} />
         <Route path="/mdn-adding-2D-content" element={<MDNAdding2DContent />} />

@@ -317,7 +317,7 @@ function RenderVideo() {
         </div>
       </div>
       <div className="footer">
-        <Link to="/mdn-animating">下一步：渲染视频</Link>
+        <Link to="/draw-point">下一步：绘制点</Link>
       </div>
     </div>
   );

@@ -8422,6 +8422,11 @@ text-table@^0.2.0:
   resolved "https://registry.npm.taobao.org/text-table/download/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
+three@^0.135.0:
+  version "0.135.0"
+  resolved "https://registry.npmmirror.com/three/download/three-0.135.0.tgz#cff4ec8edd3c51ce9bc7e88d13e8eafed4d0ddfc"
+  integrity sha512-kuEpuuxRzLv0MDsXai9huCxOSQPZ4vje6y0gn80SRmQvgz6/+rI0NAvCRAw56zYaWKMGMfqKWsxF9Qa2Z9xymQ==
+
 throat@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npm.taobao.org/throat/download/throat-6.0.1.tgz#d514fedad95740c12c2d7fc70ea863eb51ade375"
@@ -8525,6 +8530,11 @@ tsutils@^3.21.0:
   integrity sha1-tIcX05TOpsHglpg+7Vjp1hcVtiM=
   dependencies:
     tslib "^1.8.1"
+
+twgl.js@^4.21.2:
+  version "4.21.2"
+  resolved "https://registry.npmmirror.com/twgl.js/download/twgl.js-4.21.2.tgz#11bc3e90802d78775d67bad718e9623da8562fcf"
+  integrity sha1-Ebw+kIAteHddZ7rXGOliPahWL88=
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
