@@ -10,7 +10,7 @@ import DrawPoint from "./containers/DrawPoint";
 // import TwglGettingStarted from "./containers/TwglGettingStarted";
 // import ThreejsGettingStarted from "./containers/ThreejsGettingStarted";
 
-import "./index.css";
+import "./index.less";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
