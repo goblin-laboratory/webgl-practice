@@ -1,21 +1,51 @@
-import { Link } from "react-router-dom";
-import logo from "./logo.svg";
-import "./App.css";
+import React from "react";
+import { useNavigate, Outlet } from "react-router-dom";
+import { Layout, Menu } from "antd";
+import styles from "./index.module.less";
 
 function App() {
+  const navigate = useNavigate();
+  const onClick = React.useCallback(
+    ({ key }) => {
+      console.log(`onClick: ${key}`);
+      navigate(key);
+    },
+    [navigate]
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Link className="App-link" to="/mdn-getting-started">
-          MDN Getting started with WebGL
-        </Link>
-      </header>
-    </div>
+    <Layout className={styles.site}>
+      <Layout.Sider collapsible className={styles.siteSider}>
+        <div className={styles.siteLogo}>WebGL 练习</div>
+        <Menu
+          theme="dark"
+          defaultSelectedKeys={["/"]}
+          mode="inline"
+          onClick={onClick}
+        >
+          <Menu.Item key="/">首页</Menu.Item>
+          <Menu.SubMenu key="point" title="绘制点">
+            <Menu.Item key="/draw-point">绘制点</Menu.Item>
+            <Menu.Item key="/multi-point">多个点</Menu.Item>
+          </Menu.SubMenu>
+          <Menu.Item key="/draw-triangle">三角形</Menu.Item>
+          <Menu.SubMenu key="quad" title="矩行">
+            <Menu.Item key="/draw-quad">绘制矩行</Menu.Item>
+            <Menu.Item key="/multi-quad">多个矩行</Menu.Item>
+          </Menu.SubMenu>
+          <Menu.Item key="/draw-image">图片</Menu.Item>
+          <Menu.SubMenu key="video" title="视频">
+            <Menu.Item key="/draw-video">绘制视频</Menu.Item>
+            <Menu.Item key="/multi-video">多个视频</Menu.Item>
+          </Menu.SubMenu>
+        </Menu>
+      </Layout.Sider>
+      <Layout className={styles.siteLayout}>
+        <Layout.Content className={styles.siteContent}>
+          <Outlet />
+        </Layout.Content>
+      </Layout>
+    </Layout>
   );
 }
 
-export default App;
+export default React.memo(App, () => true);

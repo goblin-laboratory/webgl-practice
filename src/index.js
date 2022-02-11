@@ -1,14 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import App from "./containers/App";
-import MDNGettingStarted from "./containers/MDNGettingStarted";
-import MDNAdding2DContent from "./containers/MDNAdding2DContent";
-import MDNAnimating from "./containers/MDNAnimating";
-import RenderVideo from "./containers/RenderVideo";
+import Home from "./containers/Home";
 import DrawPoint from "./containers/DrawPoint";
-// import TwglGettingStarted from "./containers/TwglGettingStarted";
-// import ThreejsGettingStarted from "./containers/ThreejsGettingStarted";
+import MultiPoint from "./containers/MultiPoint";
+import DrawTriangle from "./containers/DrawTriangle";
 
 import "./index.less";
 import reportWebVitals from "./reportWebVitals";
@@ -17,15 +14,14 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DrawPoint />} />
-        <Route path="/draw-point" element={<DrawPoint />} />
-        {/* <Route path="/threejs-getting-started" element={<ThreejsGettingStarted />} /> */}
-        {/* <Route path="/twgl-getting-started" element={<TwglGettingStarted />} /> */}
-        <Route path="/render-video" element={<RenderVideo />} />
-        <Route path="/mdn-animating" element={<MDNAnimating />} />
-        <Route path="/mdn-adding-2D-content" element={<MDNAdding2DContent />} />
-        <Route path="/mdn-getting-started" element={<MDNGettingStarted />} />
-        <Route path="*" element={<App />} />
+        <Route path="/" element={<App />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/draw-point" element={<DrawPoint />} />
+          <Route path="/multi-point" element={<MultiPoint />} />
+          <Route path="/draw-triangle" element={<DrawTriangle />} />
+          <Route path="*" element={<Navigate replace to="/" />} />
+        </Route>
+        <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

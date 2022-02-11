@@ -6,58 +6,25 @@ import styles from "./index.module.less";
 
 const vertexSource = `
 attribute vec4 a_Position;
-attribute float a_PointSize;
 void main() {
   gl_Position = a_Position;
-  gl_PointSize = a_PointSize;
 }
 `;
 
 const fragmentSource = `
 precision mediump float;
 
-uniform vec4 u_FragColor;
 void main() {
-  gl_FragColor = u_FragColor;
+  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }
 `;
 
-const sizeList = [
-  { value: 10.0, label: "小" },
-  { value: 20.0, label: "中" },
-  { value: 30.0, label: "大" },
-];
-
-const colorList = [
-  { value: [1.0, 0.0, 0.0, 1.0], label: "红色" },
-  { value: [0.0, 1.0, 0.0, 1.0], label: "绿色" },
-  { value: [0.0, 0.0, 1.0, 1.0], label: "蓝色" },
-  { value: [1.0, 1.0, 1.0, 1.0], label: "白色" },
-];
-
-function DrawPoint() {
+function DrawTriangle() {
   const ref = React.useRef({ pointList: [] });
   const canvasRef = React.useRef(null);
-  const [size, setSize] = React.useState(sizeList[0]);
-  const [color, setColor] = React.useState(colorList[0]);
-
-  const onSizeChange = React.useCallback(({ key }) => {
-    setSize(sizeList.find((it) => it.label === key));
-  }, []);
-
-  const onColorChange = React.useCallback(({ key }) => {
-    setColor(colorList.find((it) => it.label === key));
-  }, []);
 
   const render = React.useCallback((e) => {
-    if (
-      !ref.current.gl ||
-      ref.current.a_Position < 0 ||
-      ref.current.a_PointSize < 0 ||
-      !ref.current.u_FragColor ||
-      !ref.current.pointList ||
-      0 === ref.current.pointList.length
-    ) {
+    if (!ref.current.gl || ref.current.a_Position < 0) {
       return;
     }
     ref.current.gl.clear(ref.current.gl.COLOR_BUFFER_BIT);
@@ -87,11 +54,6 @@ function DrawPoint() {
     },
     [render]
   );
-
-  React.useEffect(() => {
-    ref.current.size = size;
-    ref.current.color = color;
-  }, [size, color]);
 
   React.useEffect(() => {
     ref.current.gl = canvasRef.current.getContext("webgl");
@@ -132,15 +94,15 @@ function DrawPoint() {
   return (
     <Card>
       <Typography>
-        <Typography.Title>绘制点</Typography.Title>
+        <Typography.Title>绘制三角形</Typography.Title>
         <Typography.Paragraph>
-          <Typography.Link href="https://sites.google.com/site/webglbook/home/chapter-2">
-            WebGL 权威指南第二章：绘制点
+          <Typography.Link href="https://sites.google.com/site/webglbook/home/chapter-3">
+            WebGL 权威指南第三章：绘制三角形
           </Typography.Link>
         </Typography.Paragraph>
       </Typography>
       <div className={styles.content}>
-        <div className={styles.form}>
+        {/* <div className={styles.form}>
           <span>大小：</span>
           <Dropdown
             overlay={
@@ -172,7 +134,7 @@ function DrawPoint() {
               <DownOutlined />
             </Button>
           </Dropdown>
-        </div>
+        </div> */}
         <div className={styles.canvas}>
           <canvas
             ref={canvasRef}
@@ -189,4 +151,4 @@ function DrawPoint() {
   );
 }
 
-export default React.memo(DrawPoint, () => true);
+export default React.memo(DrawTriangle, () => true);
