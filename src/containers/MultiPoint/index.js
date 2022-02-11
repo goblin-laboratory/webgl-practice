@@ -7,20 +7,22 @@ import styles from "./index.module.less";
 const vertexSource = `
 attribute vec4 a_Position;
 attribute float a_PointSize;
+attribute vec4 a_PointColor;
+
+varying vec4 v_PointColor;
 void main() {
   gl_Position = a_Position;
   gl_PointSize = a_PointSize;
-  // gl_PointSize = 10.0;
+  v_PointColor = a_PointColor;
 }
 `;
 
 const fragmentSource = `
 precision mediump float;
 
-// uniform vec4 u_FragColor;
+varying vec4 v_PointColor;
 void main() {
-  // gl_FragColor = u_FragColor;
-  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+  gl_FragColor = v_PointColor;
 }
 `;
 
@@ -51,54 +53,40 @@ function MultiPoint() {
     setColor(colorList.find((it) => it.label === key));
   }, []);
 
-  const initVertexBuffers = React.useCallback((gl, pointList) => {
-    const { positionList, sizeList, colorList } = pointList.reduce(
-      (acc, it) => {
-        acc.positionList.push(...it.position);
-        acc.sizeList.push(it.size);
-        acc.colorList.push(...it.color);
-        return acc;
-      },
-      { positionList: [], sizeList: [], colorList: [] }
-    );
-    const n = pointList.length;
-    // const positionVertices = new Float32Array([
-    //   0.0, 0.5, -0.5, -0.5, 0.5, -0.5,
-    // ]);
-    // const n = 3;
-
-    const positionVertices = new Float32Array(positionList);
-    const positionBuffer = gl.createBuffer();
-    if (!positionBuffer) {
-      return -1;
+  const initVertexBuffer = React.useCallback((gl, location, data, size) => {
+    const buffer = gl.createBuffer();
+    const vertices = new Float32Array(data);
+    if (!buffer) {
+      return false;
     }
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, positionVertices, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(ref.current.a_Position, 2, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(ref.current.a_Position);
-
-    const sizeVertices = new Float32Array(sizeList);
-    const sizeBuffer = gl.createBuffer();
-    if (!sizeBuffer) {
-      return -1;
-    }
-    gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, sizeVertices, gl.STATIC_DRAW);
-    gl.vertexAttribPointer(ref.current.a_PointSize, 1, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(ref.current.a_PointSize);
-
-    // const colorVertices = new Float32Array(colorList);
-    // const colorBuffer = gl.createBuffer();
-    // if (!colorBuffer) {
-    //   return -1;
-    // }
-    // gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    // gl.bufferData(gl.ARRAY_BUFFER, colorVertices, gl.STATIC_DRAW);
-    // gl.vertexAttribPointer(ref.current.u_FragColor, 4, gl.FLOAT, false, 0, 0);
-    // gl.enableVertexAttribArray(ref.current.u_FragColor);
-
-    return n;
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+    gl.vertexAttribPointer(location, size, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(location);
+    return true;
   }, []);
+
+  const initVertexBuffers = React.useCallback(
+    (gl, pointList) => {
+      const { positionList, sizeList, colorList } = pointList.reduce(
+        (acc, it) => {
+          acc.positionList.push(...it.position);
+          acc.sizeList.push(it.size);
+          acc.colorList.push(...it.color);
+          return acc;
+        },
+        { positionList: [], sizeList: [], colorList: [] }
+      );
+      const n = pointList.length;
+
+      return initVertexBuffer(gl, ref.current.a_Position, positionList, 2) &&
+        initVertexBuffer(gl, ref.current.a_PointSize, sizeList, 1) &&
+        initVertexBuffer(gl, ref.current.a_PointColor, colorList, 4)
+        ? n
+        : -1;
+    },
+    [initVertexBuffer]
+  );
 
   const render = React.useCallback(
     (e) => {
@@ -106,7 +94,7 @@ function MultiPoint() {
         !ref.current.gl ||
         ref.current.a_Position < 0 ||
         ref.current.a_PointSize < 0 ||
-        // !ref.current.u_FragColor ||
+        ref.current.a_PointColor < 0 ||
         !ref.current.pointList ||
         0 === ref.current.pointList.length
       ) {
@@ -133,7 +121,6 @@ function MultiPoint() {
         position: [
           (x - rect.left - rect.width / 2) / (rect.width / 2),
           (rect.height / 2 - (y - rect.top)) / (rect.height / 2),
-          // 0.0,
         ],
       });
       render();
@@ -164,20 +151,20 @@ function MultiPoint() {
       ref.current.gl.program,
       "a_PointSize"
     );
-    // if (ref.current.a_Position < 0 || ref.current.a_PointSize < 0) {
-    //   console.log(
-    //     "Failed to get the storage location of a_Position or a_PointSize"
-    //   );
-    //   return;
-    // }
-    // ref.current.u_FragColor = ref.current.gl.getUniformLocation(
-    //   ref.current.gl.program,
-    //   "u_FragColor"
-    // );
-    // if (!ref.current.u_FragColor) {
-    //   console.log("Failed to get the storage location of u_FragColor");
-    //   return;
-    // }
+    ref.current.a_PointColor = ref.current.gl.getAttribLocation(
+      ref.current.gl.program,
+      "a_PointColor"
+    );
+    if (
+      ref.current.a_Position < 0 ||
+      ref.current.a_PointSize < 0 ||
+      ref.current.a_PointColor < 0
+    ) {
+      console.log(
+        "Failed to get the storage location of a_Position or a_PointSize or a_PointColor"
+      );
+      return;
+    }
     ref.current.gl.clearColor(0.0, 0.0, 0.0, 1.0);
     ref.current.gl.clear(ref.current.gl.COLOR_BUFFER_BIT);
   }, []);
