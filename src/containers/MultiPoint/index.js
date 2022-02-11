@@ -6,11 +6,11 @@ import styles from "./index.module.less";
 
 const vertexSource = `
 attribute vec4 a_Position;
-// attribute float a_PointSize;
+attribute float a_PointSize;
 void main() {
   gl_Position = a_Position;
-  // gl_PointSize = a_PointSize;
-  gl_PointSize = 10.0;
+  gl_PointSize = a_PointSize;
+  // gl_PointSize = 10.0;
 }
 `;
 
@@ -77,15 +77,15 @@ function MultiPoint() {
     gl.vertexAttribPointer(ref.current.a_Position, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(ref.current.a_Position);
 
-    // const sizeVertices = new Float32Array(sizeList);
-    // const sizeBuffer = gl.createBuffer();
-    // if (!sizeBuffer) {
-    //   return -1;
-    // }
-    // gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuffer);
-    // gl.bufferData(gl.ARRAY_BUFFER, sizeVertices, gl.STATIC_DRAW);
-    // gl.vertexAttribPointer(ref.current.a_PointSize, 1, gl.FLOAT, false, 0, 0);
-    // gl.enableVertexAttribArray(ref.current.a_PointSize);
+    const sizeVertices = new Float32Array(sizeList);
+    const sizeBuffer = gl.createBuffer();
+    if (!sizeBuffer) {
+      return -1;
+    }
+    gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, sizeVertices, gl.STATIC_DRAW);
+    gl.vertexAttribPointer(ref.current.a_PointSize, 1, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(ref.current.a_PointSize);
 
     // const colorVertices = new Float32Array(colorList);
     // const colorBuffer = gl.createBuffer();
@@ -105,7 +105,7 @@ function MultiPoint() {
       if (
         !ref.current.gl ||
         ref.current.a_Position < 0 ||
-        // ref.current.a_PointSize < 0 ||
+        ref.current.a_PointSize < 0 ||
         // !ref.current.u_FragColor ||
         !ref.current.pointList ||
         0 === ref.current.pointList.length
@@ -160,10 +160,10 @@ function MultiPoint() {
       ref.current.gl.program,
       "a_Position"
     );
-    // ref.current.a_PointSize = ref.current.gl.getAttribLocation(
-    //   ref.current.gl.program,
-    //   "a_PointSize"
-    // );
+    ref.current.a_PointSize = ref.current.gl.getAttribLocation(
+      ref.current.gl.program,
+      "a_PointSize"
+    );
     // if (ref.current.a_Position < 0 || ref.current.a_PointSize < 0) {
     //   console.log(
     //     "Failed to get the storage location of a_Position or a_PointSize"
