@@ -6,6 +6,7 @@ import Home from "./containers/Home";
 import DrawPoint from "./containers/DrawPoint";
 import MultiPoint from "./containers/MultiPoint";
 import DrawTriangle from "./containers/DrawTriangle";
+import DrawRectangle from "./containers/DrawRectangle";
 
 import "./index.less";
 import reportWebVitals from "./reportWebVitals";
@@ -19,6 +20,7 @@ ReactDOM.render(
           <Route path="/draw-point" element={<DrawPoint />} />
           <Route path="/multi-point" element={<MultiPoint />} />
           <Route path="/draw-triangle" element={<DrawTriangle />} />
+          <Route path="/draw-rectangle" element={<DrawRectangle />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Route>
         <Route path="*" element={<Navigate replace to="/" />} />

@@ -28,9 +28,9 @@ function App() {
             <Menu.Item key="/multi-point">多个点</Menu.Item>
           </Menu.SubMenu>
           <Menu.Item key="/draw-triangle">三角形</Menu.Item>
-          <Menu.SubMenu key="quad" title="矩行">
-            <Menu.Item key="/draw-quad">绘制矩行</Menu.Item>
-            <Menu.Item key="/multi-quad">多个矩行</Menu.Item>
+          <Menu.SubMenu key="quad" title="矩形">
+            <Menu.Item key="/draw-rectangle">绘制矩形</Menu.Item>
+            <Menu.Item key="/multi-rectangle">多个矩形</Menu.Item>
           </Menu.SubMenu>
           <Menu.Item key="/draw-image">图片</Menu.Item>
           <Menu.SubMenu key="video" title="视频">

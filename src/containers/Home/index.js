@@ -17,12 +17,12 @@ function Home() {
         <Typography.Paragraph>
           <ul>
             <li>
-              <Typography.Link href="https://webglfundamentals.org/">
+              <Typography.Link href="https://webglfundamentals.org/" target="_blank">
                 WebGL 理论基础 (https://webglfundamentals.org)
               </Typography.Link>
             </li>
             <li>
-              <Typography.Link href="https://sites.google.com/site/webglbook/home/">
+              <Typography.Link href="https://sites.google.com/site/webglbook/home/" target="_blank">
                 WebGL 编程指南 (https://sites.google.com/site/webglbook/home)
               </Typography.Link>
             </li>

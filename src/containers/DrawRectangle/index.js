@@ -18,7 +18,7 @@ void main() {
 }
 `;
 
-function DrawTriangle() {
+function DrawRectangle() {
   const ref = React.useRef({});
   const canvasRef = React.useRef(null);
 
@@ -35,17 +35,25 @@ function DrawTriangle() {
     return true;
   }, []);
 
-  const render = React.useCallback((e) => {
-    if (!ref.current.gl || ref.current.a_Position < 0) {
-      return;
-    }
-    ref.current.gl.clear(ref.current.gl.COLOR_BUFFER_BIT);
-    const n = 3;
-    initVertexBuffer(ref.current.gl, ref.current.a_Position, [0.0, 0.5, -0.5, -0.5, 0.5, -0.5], 2);
-    if (initVertexBuffer(ref.current.gl, ref.current.a_Position)) {
-      ref.current.gl.drawArrays(ref.current.gl.TRIANGLES, 0, n);
-    }
-  }, [initVertexBuffer]);
+  const render = React.useCallback(
+    (e) => {
+      if (!ref.current.gl || ref.current.a_Position < 0) {
+        return;
+      }
+      ref.current.gl.clear(ref.current.gl.COLOR_BUFFER_BIT);
+      const n = 4;
+      initVertexBuffer(
+        ref.current.gl,
+        ref.current.a_Position,
+        [-0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5],
+        2
+      );
+      if (initVertexBuffer(ref.current.gl, ref.current.a_Position)) {
+        ref.current.gl.drawArrays(ref.current.gl.TRIANGLE_STRIP, 0, n);
+      }
+    },
+    [initVertexBuffer]
+  );
 
   React.useEffect(() => {
     ref.current.gl = canvasRef.current.getContext("webgl");
@@ -65,10 +73,10 @@ function DrawTriangle() {
   return (
     <Card>
       <Typography>
-        <Typography.Title>绘制三角形</Typography.Title>
+        <Typography.Title>绘制矩形</Typography.Title>
         <Typography.Paragraph>
           <Typography.Link href="https://sites.google.com/site/webglbook/home/chapter-3" target="_blank">
-            WebGL 权威指南第三章：绘制三角形
+            WebGL 权威指南第三章：绘制矩形
           </Typography.Link>
         </Typography.Paragraph>
       </Typography>
@@ -84,4 +92,4 @@ function DrawTriangle() {
   );
 }
 
-export default React.memo(DrawTriangle, () => true);
+export default React.memo(DrawRectangle, () => true);

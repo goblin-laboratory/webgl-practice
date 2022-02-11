@@ -174,7 +174,7 @@ function MultiPoint() {
       <Typography>
         <Typography.Title>一次绘制多个点</Typography.Title>
         <Typography.Paragraph>
-          <Typography.Link href="https://sites.google.com/site/webglbook/home/chapter-3">
+          <Typography.Link href="https://sites.google.com/site/webglbook/home/chapter-3" target="_blank">
             WebGL 权威指南第三章：一次绘制多个点
           </Typography.Link>
         </Typography.Paragraph>

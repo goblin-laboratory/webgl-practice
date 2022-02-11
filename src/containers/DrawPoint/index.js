@@ -134,7 +134,7 @@ function DrawPoint() {
       <Typography>
         <Typography.Title>绘制点</Typography.Title>
         <Typography.Paragraph>
-          <Typography.Link href="https://sites.google.com/site/webglbook/home/chapter-2">
+          <Typography.Link href="https://sites.google.com/site/webglbook/home/chapter-2" target="_blank">
             WebGL 权威指南第二章：绘制点
           </Typography.Link>
         </Typography.Paragraph>
