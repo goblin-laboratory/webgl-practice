@@ -26,6 +26,7 @@ function App() {
           <Menu.SubMenu key="point" title="绘制点">
             <Menu.Item key="/draw-point">绘制点</Menu.Item>
             <Menu.Item key="/multi-point">多个点</Menu.Item>
+            <Menu.Item key="/multi-attr-point">共用 Buffer</Menu.Item>
           </Menu.SubMenu>
           <Menu.Item key="/draw-triangle">三角形</Menu.Item>
           <Menu.SubMenu key="quad" title="矩形">
