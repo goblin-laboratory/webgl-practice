@@ -23,6 +23,9 @@ function App() {
           onClick={onClick}
         >
           <Menu.Item key="/">首页</Menu.Item>
+          <Menu.SubMenu key="three" title="Three.js">
+            <Menu.Item key="/three/hello-world">Hello World</Menu.Item>
+          </Menu.SubMenu>
           <Menu.SubMenu key="point" title="绘制点">
             <Menu.Item key="/draw-point">绘制点</Menu.Item>
             <Menu.Item key="/multi-point">多个点</Menu.Item>

@@ -9,6 +9,7 @@ import MultiAttrPoint from "./containers/MultiAttrPoint";
 import DrawTriangle from "./containers/DrawTriangle";
 import DrawRectangle from "./containers/DrawRectangle";
 import MultiRectangle from "./containers/MultiRectangle";
+import ThreeHelloWorld from "./containers/ThreeHelloWorld";
 
 import "./index.less";
 import reportWebVitals from "./reportWebVitals";
@@ -19,6 +20,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route path="/" element={<Home />} />
+          <Route path="/three/hello-world" element={<ThreeHelloWorld />} />
           <Route path="/draw-point" element={<DrawPoint />} />
           <Route path="/multi-point" element={<MultiPoint />} />
           <Route path="/multi-attr-point" element={<MultiAttrPoint />} />
