@@ -10,11 +10,11 @@ function initRenderer(canvas:any) {
 
 function initCamera(){
   const fov = 75;
-  const aspect = 2;  // the canvas default
+  const aspect = window.innerWidth / window.innerHeight;  // the canvas default
   const near = 0.1;
-  const far = 100;
+  const far = 1000;
   const camera = new PerspectiveCamera(fov, aspect, near, far);
-  camera.position.z = 10;
+  camera.position.z = 5;
   return camera;
 }
 
