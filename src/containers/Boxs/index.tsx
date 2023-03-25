@@ -1,9 +1,9 @@
 import React from 'react';
 
-import * as THREE from 'three';
+import { WebGLRenderer, PerspectiveCamera, Scene, DirectionalLight, BoxGeometry, MeshBasicMaterial, Mesh } from 'three';
 
 function initRenderer(canvas: any) {
-  const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+  const renderer = new WebGLRenderer({ antialias: true, canvas });
   renderer.setSize(window.innerWidth, window.innerHeight);
   return renderer;
 }
@@ -13,7 +13,7 @@ function initCamera() {
   const aspect = window.innerWidth / window.innerHeight; // the canvas default
   const near = 0.1;
   const far = 40;
-  const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  const camera = new PerspectiveCamera(fov, aspect, near, far);
   // camera.position.z = 10;
   camera.position.set(0, 0, 10);
   camera.lookAt(0, 0, 0);
@@ -70,19 +70,15 @@ class Warehouse {
         for (let z = 0; z < this.depth; z += 1) {
           const zAxisValue = this.getZAxixValue(z);
           positions.push({ xAxisValue, yAxisValue, zAxisValue });
-          render(x * this.width + y * this.height + z * this.depth, xAxisValue, yAxisValue, zAxisValue);
+          render(xAxisValue, yAxisValue, zAxisValue);
         }
       }
     }
-    console.table(positions, ['xAxisValue', 'yAxisValue', 'zAxisValue']);
-  }
-
-  get count() {
-    return this.width * this.height * this.depth;
+    console.table(positions, ["xAxisValue", "yAxisValue", "zAxisValue"]);
   }
 }
 
-const warehouse = new Warehouse(1, 1, 1);
+const warehouse = new Warehouse(8, 6, 2);
 
 let initialState = false;
 function init(canvas?: any) {
@@ -93,7 +89,7 @@ function init(canvas?: any) {
   const renderer = initRenderer(canvas);
   const camera = initCamera();
 
-  const scene = new THREE.Scene();
+  const scene = new Scene();
 
   // const color = 0xffffff;
   // const intensity = 1;
@@ -104,39 +100,16 @@ function init(canvas?: any) {
   const boxWidth = 0.8;
   const boxHeight = 0.8;
   const boxDepth = 0.8;
-  const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+  const geometry = new BoxGeometry(boxWidth, boxHeight, boxDepth);
 
-  const material = new THREE.MeshBasicMaterial({ color: 0x44aa88 });
+  const material = new MeshBasicMaterial({ color: 0x44aa88 });
 
-  // const cubes = new THREE.InstancedMesh(geometry, material, warehouse.count);
-  // warehouse.forEach((idx: number, xAxis: number, yAxis: number, zAxis: number) => {
-  //   // greenish blue
-  //   const matrix = new THREE.Matrix4();
-  //   matrix.setPosition(xAxis, yAxis, zAxis);
-  //   debugger;
-  //   cubes.setMatrixAt(idx, matrix);
-  //   // cube.position.set(x, y, z);
-  // });
-  // scene.add(cubes);
-
-  // const lod = new THREE.LOD();
-  // lod.addLevel(cubes, 0);
-  // scene.add(lod);
-
-  // const mesh = new THREE.InstancedMesh(geometry, material, 1);
-  // const matrix = new THREE.Matrix4();
-  // matrix.setPosition(0.5, 0.5, 0.5);
-  // mesh.setMatrixAt(0, matrix);
-
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(-0.5, -0.5, 0.5);
-
-
-  // 将 InstancedMesh 添加到场景中
-  scene.add(mesh);
-
-  const axesHelper = new THREE.AxesHelper(10);
-  scene.add(axesHelper);
+  warehouse.forEach((x: number, y: number, z: number) => {
+    // greenish blue
+    const cube = new Mesh(geometry, material);
+    cube.position.set(x, y, z);
+    scene.add(cube);
+  });
 
   // const cubes = [{ color: 0x39b20a }, { color: 0x44aa88 }, { color: 0xc50d0d }].map((it, idx: number) => {
   //   const material = new MeshPhongMaterial({ color: it.color }); // greenish blue
