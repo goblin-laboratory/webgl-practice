@@ -1,68 +1,52 @@
 import Shelf from './Shelf';
-import PositionNode from './PositionNode';
+import WarehouseNode from './WarehouseNode';
+import ShelfLayout from './ShelfLayout';
 import EventBus from './EventBus';
 
-export default class Warehouse {
-  // 仓库 长、宽、高，对应空间的 x、y、z 轴
-  private length: number = 0;
+interface WarehouseNodeLayoutConfig {
+  type: string;
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
+}
+
+interface WarehouseLayoutConfig {
+  width: number;
+  height: number;
+  zLevelHeight: number;
+  zLevelNumber: number;
+  nodes: WarehouseNodeLayoutConfig[];
+}
+
+export default class WarehouseLayout {
+  private cfg: WarehouseLayoutConfig | null = null;
+  // 仓库长、宽，x 和 y 方向的大小
   private width: number = 0;
   private heiht: number = 0;
+  // 货架布局信息，z 方向上的层数和每层高度
+  private shelfLayout = new ShelfLayout();
   // 节点列表
-  private nodes: PositionNode[] = [];
-  private shelfNodes: PositionNode[] = [];
-  private shelfNodeMap: Map<string, PositionNode> = new Map();
+  private nodes: WarehouseNode[] = [];
+  private shelfNodes: WarehouseNode[] = [];
+  private shelfNodeMap: Map<string, WarehouseNode> = new Map();
 
-  constructor() {
-    EventBus.getInstance().addEventListener('Warehouse.data.update', (nodes: any[]) => {
-      const shelfNodes: any[] = [];
-      nodes.forEach((node: any, idx: number) => {
-        const shelfNode = this.shelfNodeMap.get(node.id);
-        if (!shelfNode) {
-          return;
-        }
-        shelfNodes.push(shelfNode);
-        shelfNode.updateNodeInfo(node);
-      });
-      EventBus.getInstance().dispatchEvent('Warehouse.render.update', shelfNodes);
-    });
-  }
+  constructor() {}
 
-  set config(cfg: any) {
-    this.length = cfg.length;
+  set config(cfg: WarehouseLayoutConfig) {
+    this.cfg = cfg;
     this.width = cfg.width;
-    this.heiht = cfg.heiht;
+    this.heiht = cfg.height;
+    this.shelfLayout.setLayout({ height: cfg.zLevelHeight, number: cfg.zLevelNumber });
+
     this.shelfNodes = [];
     this.nodes = (cfg.nodes || []).map((it: any) => {
-      const node = new PositionNode(it);
+      const node = new WarehouseNode(it);
       if (node.isShelf()) {
         this.shelfNodes.push(node);
       }
       return node;
     });
     EventBus.getInstance().dispatchEvent('Warehouse.render.init', this);
-  }
-
-  initShelfNodes(nodes: any[]) {
-    this.initNodeMap();
-    if (nodes.length > this.shelfNodes.length) {
-      EventBus.getInstance().dispatchEvent('Warehouse.error', { message: '库位配置问题' });
-      nodes.length = this.shelfNodes.length;
-    } else {
-      this.shelfNodes.length = nodes.length;
-    }
-    nodes.forEach((node: any, idx: number) => {
-      const shelfNode = this.shelfNodes[idx];
-      shelfNode?.updateNodeInfo(node);
-      this.shelfNodeMap.set(node.id, shelfNode);
-    });
-    EventBus.getInstance().dispatchEvent('Warehouse.render.update', this.shelfNodes);
-  }
-
-  initNodeMap() {
-    if (!this.shelfNodeMap) {
-      this.shelfNodeMap = new Map();
-    } else {
-      this.shelfNodeMap.clear();
-    }
   }
 }
