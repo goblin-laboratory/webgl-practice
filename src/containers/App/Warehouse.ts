@@ -4,12 +4,17 @@ import EventBus from './EventBus';
 
 export default class Warehouse {
   // 仓库 长、宽、高，对应空间的 x、y、z 轴
-  private length: number = 0;
-  private width: number = 0;
-  private heiht: number = 0;
+  private length = 0;
+
+  private width = 0;
+
+  private heiht = 0;
+
   // 节点列表
   private nodes: PositionNode[] = [];
+
   private shelfNodes: PositionNode[] = [];
+
   private shelfNodeMap: Map<string, PositionNode> = new Map();
 
   constructor() {
@@ -46,6 +51,7 @@ export default class Warehouse {
     this.initNodeMap();
     if (nodes.length > this.shelfNodes.length) {
       EventBus.getInstance().dispatchEvent('Warehouse.error', { message: '库位配置问题' });
+      // eslint-disable-next-line no-param-reassign
       nodes.length = this.shelfNodes.length;
     } else {
       this.shelfNodes.length = nodes.length;

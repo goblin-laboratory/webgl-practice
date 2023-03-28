@@ -1,8 +1,9 @@
 export default class ShelfLayout {
   // 仓库货架的层数
-  private number: number = 1;
+  private number = 1;
+
   // 每一层货位的高度
-  private height: number = 1;
+  private height = 1;
 
   constructor(layout: any = {}) {
     this.setLayout(layout);
@@ -21,8 +22,8 @@ export default class ShelfLayout {
     return this.height * (zIndex + 0.5);
   }
 
-  forEach(fn: Function) {
-    for (let i = 0; i < this.number; i++) {
+  forEach(fn: any) {
+    for (let i = 0; i < this.number; i += 1) {
       fn(i);
     }
   }

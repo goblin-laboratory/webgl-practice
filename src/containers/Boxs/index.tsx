@@ -22,9 +22,13 @@ function initCamera() {
 
 class Warehouse {
   private width = 800;
+
   private height = 600;
+
   private depth = 10;
+
   private positionSize = 1;
+
   private boxRate = 0.8;
 
   constructor(x: number, y: number, z: number) {
@@ -36,15 +40,20 @@ class Warehouse {
   get boxSize() {
     return this.positionSize * this.boxRate;
   }
+
   get gap() {
     return (this.positionSize - this.boxSize) / 2;
   }
+
   get xAxisMin() {
     return -1 * (this.width / 2);
   }
+
   get yAxisMin() {
     return -1 * (this.height / 2);
   }
+
+  // eslint-disable-next-line class-methods-use-this
   get zAxisMin() {
     return 0;
   }
@@ -74,7 +83,7 @@ class Warehouse {
         }
       }
     }
-    console.table(positions, ["xAxisValue", "yAxisValue", "zAxisValue"]);
+    console.table(positions, ['xAxisValue', 'yAxisValue', 'zAxisValue']);
   }
 }
 
@@ -123,7 +132,7 @@ function init(canvas?: any) {
   // scene.add(cube);
 
   function render(time: any) {
-    time *= 0.001; // convert time to seconds
+    const seconds = time * 0.001; // convert time to seconds
 
     // cube.rotation.x = time;
     // cube.rotation.y = time;

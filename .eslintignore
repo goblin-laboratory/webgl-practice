@@ -1,6 +1,13 @@
-build/*
-dist/*
-node_modules/*
+# dependencies
+node_modules
 
+# testing
+coverage
+
+# production
+build
+dist
+
+# 标记被删除的文件和目录
 ___*
-*.min.js
+___*.*

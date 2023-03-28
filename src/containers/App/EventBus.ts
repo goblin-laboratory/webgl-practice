@@ -1,9 +1,14 @@
 /** 单例模式的 EventBus */
 export default class EventBus {
+  // eslint-disable-next-line no-use-before-define
   private static instance: EventBus;
-  private eventListeners: {[event: string]: Function[]} = {};
 
-  private constructor() {}
+  private eventListeners: {[event: string]: any[]} = {};
+
+  // eslint-disable-next-line no-useless-constructor
+  private constructor() {
+    // debugger;
+  }
 
   public static getInstance(): EventBus {
     if (!EventBus.instance) {
@@ -12,14 +17,14 @@ export default class EventBus {
     return EventBus.instance;
   }
 
-  public addEventListener(event: string, listener: Function): void {
+  public addEventListener(event: string, listener: any): void {
     if (!this.eventListeners[event]) {
       this.eventListeners[event] = [];
     }
     this.eventListeners[event].push(listener);
   }
 
-  public removeEventListener(event: string, listener: Function): void {
+  public removeEventListener(event: string, listener: any): void {
     if (this.eventListeners[event]) {
       this.eventListeners[event] = this.eventListeners[event].filter((l) => l !== listener);
     }
@@ -32,5 +37,3 @@ export default class EventBus {
     }
   }
 }
-
-

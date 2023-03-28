@@ -18,12 +18,18 @@ interface PositionNodeCfg {
 export default class PositionNode {
   private type: PositionType = PositionType.aisle;
 
-  private x: number = 0;
-  private y: number = 0;
-  private z: number = 0;
-  private length: number = 1;
-  private width: number = 1;
-  private heiht: number = 1;
+  private x = 0;
+
+  private y = 0;
+
+  private z = 0;
+
+  private length = 1;
+
+  private width = 1;
+
+  private heiht = 1;
+
   private info: any | null = null;
 
   constructor(cfg: {

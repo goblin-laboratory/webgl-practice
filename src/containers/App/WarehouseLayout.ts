@@ -21,17 +21,23 @@ interface WarehouseLayoutConfig {
 
 export default class WarehouseLayout {
   private cfg: WarehouseLayoutConfig | null = null;
+
   // 仓库长、宽，x 和 y 方向的大小
-  private width: number = 0;
-  private heiht: number = 0;
+  private width = 0;
+
+  private heiht = 0;
+
   // 货架布局信息，z 方向上的层数和每层高度
   private shelfLayout = new ShelfLayout();
+
   // 节点列表
   private nodes: WarehouseNode[] = [];
+
   private shelfNodes: WarehouseNode[] = [];
+
   private shelfNodeMap: Map<string, WarehouseNode> = new Map();
 
-  constructor() {}
+  // constructor() {}
 
   set config(cfg: WarehouseLayoutConfig) {
     this.cfg = cfg;
